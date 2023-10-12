@@ -1,0 +1,61 @@
+﻿@model Cinema.WebApp.Models.MovieViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<style>
+
+    .session-card-outline {
+        padding-left: 15px;
+    }
+
+    .session-card {
+        margin-bottom: 10px; /* Adjust the margin as needed */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0); /* Add a shadow with no initial effect */
+        transition: box-shadow 0.3s; /* Add a smooth transition effect */
+    }
+
+    .session-card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+    }
+
+    .session-link {
+        text-decoration: none;
+        color: inherit; /* Inherit the color from the parent */
+    }
+
+    .session-link:hover {
+        text-decoration: none; /* Remove underline on hover */
+    }
+</style>
+
+<div class="container">
+    <h2>@Model.Title</h2>
+    <p>@Model.Description</p>
+    <p>Duration: @Model.Lasts minutes</p>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div style="max-height: 70vh; overflow-y: auto; overflow-x: hidden">
+                <div class="row">
+                    @foreach (var session in Model.Sessions)
+                    {
+                        <div class="col-md-3 session-card-outline">
+                            <a href="@Url.Action(action: "Index", controller: "Booking", new { id = session.Id })" class="card session-card session-link">
+                                <div class="card-header">
+                                    @session.RoomName
+                                </div>
+                                <div class="card-body">
+                                    <p>Start: @session.Starts.ToString("hh:mm tt")</p>
+                                    <p>End: @session.Ends.ToString("hh:mm tt")</p>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

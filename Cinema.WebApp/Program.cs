@@ -1,4 +1,5 @@
 using Cinema.Database;
+using Cinema.WebApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.WebApp
@@ -16,6 +17,8 @@ namespace Cinema.WebApp
                 var configuration = services.GetRequiredService<IConfiguration>();
                 options.UseSqlServer(configuration.GetConnectionString("Cinema"));
             });
+
+            builder.Services.AddScoped<IMovieService, MovieService>();
 
             var app = builder.Build();
 
@@ -36,7 +39,7 @@ namespace Cinema.WebApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}");
+                pattern: "{controller=Movies}/{action=Index}");
 
             app.Run();
         }

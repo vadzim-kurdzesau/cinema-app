@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Cinema.WebApp.Models.AvailableMovieViewModel>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+@*             <th>
+                @Html.HiddenFor(model => model.Id)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+@*                 <td>
+                    @Html.DisplayFor(modelItem => movie.Id)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Title)
+                </td>
+                <td>
+                    @Html.ActionLink(linkText: "View", actionName: "Details", new { id = movie.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
