@@ -16,3 +16,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.session-card-outline {
+    padding-left: 15px;
+}
+
+.session-card {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0); /* Add a shadow with no initial effect */
+    transition: box-shadow 0.3s; /* Add a smooth transition effect */
+}
+
+    .session-card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+    }
+
+.session-link {
+    text-decoration: none;
+    color: inherit; /* Inherit the color from the parent */
+}
+
+    .session-link:hover {
+        text-decoration: none; /* Remove underline on hover */
+    }
