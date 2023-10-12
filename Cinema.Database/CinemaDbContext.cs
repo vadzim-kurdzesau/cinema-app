@@ -8,8 +8,6 @@ namespace Cinema.Database
     {
         public DbSet<MovieEntity> Movies { get; set; }
 
-        public DbSet<UserEntity> Users { get; set; }
-
         public CinemaDbContext(DbContextOptions options)
             : base(options)
         {
@@ -17,40 +15,25 @@ namespace Cinema.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure Ticket entity
-            modelBuilder.Entity<TicketEntity>()
-                .HasKey(ticket => new { ticket.Id, ticket.MovieId });
-
-            modelBuilder.Entity<TicketEntity>()
-                .Property(ticket => ticket.Lasts)
+            // Configure Movie entity
+            modelBuilder.Entity<MovieEntity>()
+                .Property(movie => movie.Lasts)
                 .HasConversion(new TimeSpanToTicksConverter());
 
-            // Configure Seat entity
-            modelBuilder.Entity<SeatEntity>()
-                .HasKey(seat => new { seat.HallId, seat.Number });
-
-            // Configure Cinema Hall entity relationships
-            modelBuilder.Entity<CinemaHallEntity>()
-                .HasMany(hall => hall.Seats)
-                .WithOne(seat => seat.Hall)
-                .HasForeignKey(seat => seat.HallId);
-
-            modelBuilder.Entity<CinemaHallEntity>()
-                .HasMany(hall => hall.Movies)
-                .WithMany(movie => movie.Halls)
-                .UsingEntity("Movies_In_Halls");
-
-            // Configure Movie entity relationships
             modelBuilder.Entity<MovieEntity>()
-                .HasMany(movie => movie.Tickets)
-                .WithOne(ticket => ticket.Movie)
-                .HasForeignKey(ticket => ticket.MovieId);
+                .HasMany(movie => movie.Sessions)
+                .WithOne(session => session.Movie)
+                .HasForeignKey(session => session.MovieId);
 
-            // Configure User entity relationships
-            modelBuilder.Entity<UserEntity>()
-                .HasMany(user => user.Tickets)
-                .WithOne(ticket => ticket.User)
-                .HasForeignKey(ticket => ticket.UserId);
+            // Configure Movie Session entity
+            modelBuilder.Entity<MovieSessionEntity>()
+                .HasMany(session => session.Tickets)
+                .WithOne(ticket => ticket.Session)
+                .HasForeignKey(ticket => ticket.SessionId);
+
+            // Configure Ticket entity
+            modelBuilder.Entity<TicketEntity>()
+                .HasKey(ticket => new { ticket.SessionId, ticket.SeatNumber });
         }
     }
 }

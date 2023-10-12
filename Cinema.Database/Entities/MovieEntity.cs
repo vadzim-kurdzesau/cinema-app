@@ -11,11 +11,11 @@ namespace Cinema.Database.Entities
 
         public string? Description { get; set; }
 
-        public IEnumerable<TicketEntity> Tickets { get; set; }
+        public TimeSpan Lasts { get; set; }
 
         /// <summary>
-        /// List of halls where this movie is shown.
+        /// List of sessions where this movie is shown.
         /// </summary>
-        public IEnumerable<CinemaHallEntity> Halls { get; set; }
+        public IEnumerable<MovieSessionEntity> Sessions { get; set; }
     }
 }
